@@ -312,7 +312,7 @@ bool HeadDel(LList_t *Head)
 *                 函数作者：	c7355608bs@136.com
 *                 创建日期：	2024/4/25
 *                 修改历史：	2024/4/1.0
-*                 函数版本：	1.0
+*                 函数版本：	2.0
 *
 *******************************************************************************/
 bool EndDel(LList_t *Head)
@@ -325,11 +325,18 @@ bool EndDel(LList_t *Head)
 		printf("链表为空，删除失败\n");
 		return false;
 	}
-	//2.遍历
+	//2.如果只有一个元素
+	if(NULL == Pend->next){
+		Head->next = NULL;
+		free(Pend);
+		return true;
+	}
+	//3.遍历
 	while( Pend->next )
 	{
 		Prev = Prev->next;
 		Pend = Pend->next;
+		
 	}
 
 	//3.删除并释放
@@ -386,12 +393,8 @@ int main(int argc, char const *argv[])
 
 	LList_t *List = LList_Create();
 	LList_TailInsert(List,10);
-	LList_TailInsert(List,1);
-	LList_TailInsert(List,0);
-	LList_TailInsert(List,100);
-	LList_TailInsert(List,4);
-	LList_Print(List);
-	InstallDel(List,5);
+	//LList_Print(List);
+	EndDel(List);
 	LList_Print(List);
 	return 0;
 }
